@@ -3,7 +3,7 @@ NodeJS application for controlling Canon DSLR cameras using a Raspberry Pi
 <br><br>
 
 ### Installation routine on Pi3B/Pi3B+/Pi4:<br>
-- Install Raspian Buster on SD<br><br>
+Install Raspian Buster on SD<br><br>
 
 $apt update & apt upgrade<br>
 $apt install curl<br>
@@ -18,7 +18,7 @@ $npm install express<br>
 $npm install socketio<br><br>
 
 ### Configure network shares:<br>
-## On file server (to store photos):<br>
+#### On file server (to store photos):<br>
 $apt install samba<br>
 $apt install samba-client<br>
 $nano /etc/samba/smb.conf<br><br>
@@ -35,8 +35,8 @@ $sudo service smbd restart<br>
 $smbpasswd -a someuser<br><br><br>
 
 
-## On Pi:<br>
-- Permanent share:<br><br>
+#### On Pi:<br>
+Permanent share:<br><br>
 
 $pico /etc/fstab<br>
 <br>
