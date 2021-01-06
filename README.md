@@ -46,7 +46,9 @@ $pico /etc/fstab
 <br>
 Add:<br>
 ```
+
 //<server ip>/sharefolder /media/yourfolderonserver cifs username=someuser,password=yourpassword,uid=1000,gid=1000,users,exec,noauto,x-systemd.automount 0 0
+
 ```
 <br>
 
