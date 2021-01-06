@@ -3,73 +3,73 @@ NodeJS application for controlling Canon DSLR cameras using a Raspberry Pi
 <br><br>
 
 ### Installation routine on Pi3B/Pi3B+/Pi4:<br>
-Install Raspian Buster on SD<br><br>
+Install Raspian Buster on SD<br>
 ```
-$apt update & apt upgrade<br>
-$apt install curl<br>
-$curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash<br>
-$nvm install 10<br>
-$npm install<br>
-$apt install libgphoto2-dev<br>
-$apt install pkg-config | dpkg<br>
-$apt install clang<br>
-$npm install gphoto2<br>
-$npm install express<br>
-$npm install socketio<br><br>
+$apt update & apt upgrade
+$apt install curl
+$curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+$nvm install 10
+$npm install
+$apt install libgphoto2-dev
+$apt install pkg-config | dpkg
+$apt install clang
+$npm install gphoto2
+$npm install express
+$npm install socketio<br>
 ```
 ### Configure network shares:<br>
 #### On file server (to store photos):<br>
 ```
-$apt install samba<br>
-$apt install samba-client<br>
-$nano /etc/samba/smb.conf<br><br>
+$apt install samba
+$apt install samba-client
+$nano /etc/samba/smb.conf<br>
 ```
 ```
-[canon]<br>
-path = /home/someuser/folder/folder<br>
-valid users = someuser,root<br>
-read only = no<br>
-guest ok = yes<br>
-create mask = 0777<br>
-create directory mask = 0777<br><br>
+[canon]
+path = /home/someuser/folder/folder
+valid users = someuser,root
+read only = no
+guest ok = yes
+create mask = 0777
+create directory mask = 0777
 ```
 ```
-$sudo service smbd restart<br>
-$smbpasswd -a someuser<br><br><br>
+$sudo service smbd restart
+$smbpasswd -a someuser
 ```
 
 #### On Pi:<br>
-Permanent share:<br><br>
+Permanent share:<br>
 ```
-$pico /etc/fstab<br>
+$pico /etc/fstab
 ```
 <br>
 Add:<br>
 ```
-//<server ip>/sharefolder /media/yourfolderonserver cifs username=someuser,password=yourpassword,uid=1000,gid=1000,users,exec,noauto,x-systemd.automount 0 0<br><br>
+//<server ip>/sharefolder /media/yourfolderonserver cifs username=someuser,password=yourpassword,uid=1000,gid=1000,users,exec,noauto,x-systemd.automount 0 0
 ```
 <br>
 
 ### Boot node script on startup / Install NodeJS script as a service:<br>
 ```
-$npm install -g forever<br>
-$npm install -g forever-service<br>
-$cd /home/user/yournodescriptfolder/<br>
-$forever-service install yourservice --script yournodescript.js<br><br>
+$npm install -g forever
+$npm install -g forever-service
+$cd /home/user/yournodescriptfolder/
+$forever-service install yourservice --script yournodescript.js
 ```
 
 ### Node logs:<br>
 ```
-$pico /var/log/yourservice.log<br><br>
+$pico /var/log/yourservice.log<br>
 ```
 
 ### Live trace:<br>
 ```
-$tail -f /var/log/yourservice.log<br><br>
+$tail -f /var/log/yourservice.log
 ```
 
 ### Restart/Status nodeJS service:<br>
 ```
-$service yourservice restart<br>
-$service yourservice status<br><br>
+$service yourservice restart
+$service yourservice status
 ```
