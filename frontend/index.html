@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+    <meta name="description" content="CANON" />
+    <meta name="Author" content="VWR" />
+    <meta name="keywords" content="CANON" />
+    <meta name="robots" content="noindex, nofollow" />
+  <!--   <link rel="manifest" href="manifest.json"> -->
+
+	<title>CANON CONTROLLER</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+	
+	<script src="socket.io/socket.io.js"></script>
+
+		<style>
+
+			html, body, div, span, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			abbr, address, cite, code,
+			del, dfn, em, img, ins, kbd, q, samp,
+			small, strong, sub, sup, var,
+			b, i,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td,
+			article, aside, canvas, details, figcaption, figure,
+			footer, header, hgroup, menu, nav, section, summary,
+			time, mark, audio, video {
+				margin:0;
+				padding:0;
+				border:0;
+				outline:0;
+				font-size:100%;
+				vertical-align:baseline;
+				background:transparent;
+			}
+			html,
+			body {
+				background:#000;
+				color:#c5c5c5;
+				width:100%;
+				height:100%;
+			}
+			body {
+				font-family: 'Ubuntu', sans-serif;
+				font-style: normal;
+				font-size: 100%;
+				overflow-y: auto;
+				letter-spacing: 0.08em;
+				background:transparent;
+				text-align:left;
+				text-transform: uppercase;
+			}
+			h1{
+				font-style: normal;
+				font-size: 60px;
+				color: #fff;
+			}
+			h2{
+				font-style: normal;
+				font-size: 40px;
+				color: #888;
+			}
+			h3{
+				font-style: normal;
+				font-size: 30px;
+				color: #888;
+			}
+			h4{
+				font-style: normal;
+				font-size: 20px;
+				color: #fff;
+			}
+			#content {
+				width: 100%;
+				display: block;
+				padding: 0px;
+				text-align: center;
+				box-sizing: border-box;
+				height: 100% !important;
+				min-height: 100% !important;
+			}
+			.holder {
+				width: 100%;
+				display: block;
+				padding: 0px;
+				text-align: center;
+				box-sizing: border-box;
+				height: 100% !important;
+				min-height: 100% !important;
+					
+			}
+
+         	.flexed{
+	         	height: 100% !important;
+				min-height: 100% !important;
+				width: 100%; 
+	            display: flex; 
+	           /* justify-content: center;*/
+	            align-items: center; 
+				text-align: center;	 
+	         	box-sizing: border-box;
+         	}
+         	.flexcontent{
+				width: 100%; 
+	            display: block; 
+				text-align: center; 
+	         	box-sizing: border-box;
+         	}
+
+			.butt { 
+				box-sizing: border-box;
+				margin: 0px;
+				width:40px;
+				height: 40px;
+				border-radius: 40px;
+				font-size: 6px;
+				line-height: 40px;
+				padding:0;
+				border:0;
+				outline:0;
+				background: green;
+				text-align:center;
+				text-transform: uppercase;
+				position: absolute;
+			}
+			#display {
+				display: none;
+			}
+
+			#displayFeedback{
+				position: absolute;
+				top: 10px;
+				right: 11.5%;
+			}
+			.buttsquare { 
+				box-sizing: border-box;
+				width:20%;
+				height: auto;
+				font-size: 30px;
+				line-height: 50px;
+				padding:20px 25px;
+				border:0;
+				margin:0px auto 40px auto;
+				outline:0;
+				background: orange;
+				text-align:center;
+				text-transform: uppercase;
+				border-radius: 10px;
+				z-index: 100;
+				color: #111;
+				opacity: 70%;
+			 }
+
+			 .pulsate {
+				 -webkit-animation: pulsate 1s ease-out;
+				 -webkit-animation-iteration-count: infinite; 
+				  opacity: 0;
+				}
+				@-webkit-keyframes pulsate {
+				    0% { 
+				        opacity: 0;
+				    }
+				    50% { 
+				        opacity: 1.0;
+				    }
+				    100% { 
+				        opacity: 0;
+				    }
+				}
+			span{
+				font-size: 1.5em;
+				line-height: 1.5em;
+				padding: 0 20px;
+				background: #444;
+				color:#fff;
+				text-transform: uppercase;
+			}
+
+
+			img{
+				width: 50%;
+				padding: 10px;
+			}
+			.logo{
+				width: 40%;
+				padding: 10px;
+			}
+			.imgpreview{
+				width: 100%;
+				padding: 0px;
+				position: fixed;
+				z-index: -1;
+				top:0;
+				left:0;
+			}
+			.loadergif{
+				width: 40%;
+				padding: 0 0 0px;
+				display: none;
+				margin: 0 auto;
+			}
+
+
+			@media screen and (max-width: 640px) {
+				.buttsquare { 
+					box-sizing: border-box;
+					width:40%;
+					height: auto;
+					font-size: 30px;
+					line-height: 50px;
+					padding:20px 25px;
+					border:0;
+					margin:0px auto 40px auto;
+					outline:0;
+					color: #111;
+					background: orange;
+					text-align:center;
+					text-transform: uppercase;
+					z-index: 100;
+			 	}
+			 	.logo{
+					width: 50%;
+					padding: 10px;
+				}
+				.imgpreview{
+					
+				}
+
+				h3{
+					font-style: normal;
+					font-size: 40px;
+					color: #888;
+				}
+				.loadergif{
+					width: 80%;
+					padding: 10px;
+					display: none;
+				}
+
+
+
+			}
+		</style>
+		
+
+
+  </head>
+<body>
+
+
+
+<div id="content">
+
+
+<!-- DISCONNECTED FROM LOCAL -->
+	<div class="holder flexit" id="localerror">
+		<div class="flexed">
+			<div class="flexcontent">
+				<!-- <img class="logo" src="cocalogo.png" /> -->
+				<h1 class="pulsate" id="errorcopy">LOCAL CONNECTION ERROR</h1>
+			</div>
+		</div>
+	</div>
+
+
+<!-- IDLE -->
+	<div class="holder flexit" id="state0">
+		<div class="flexed">
+			<div class="flexcontent">
+				<img id="loader" class="loadergif" src="loader.gif" />
+				 <img id="previewPhoto" class="imgpreview" src="" />
+				<div class="buttsquare" id="buttonStart" value="0" onclick="shoot(1);">START INTERVAL</div>
+				<div class="buttsquare" id="buttonStop" value="0" onclick="shoot(0);">STOP INTERVAL</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+</div>
+
+
+
+<script type="text/javascript">
+
+
+// -------------------------------------------------------------------------------
+// VWR PI3B NODEJS CANON INTERVAL NETWORK CONTROLLER
+// V1.1 FOR RASBIAN BUSTER
+// -------------------------------------------------------------------------------
+
+
+var socket = io.connect();
+
+		
+		var uiHolders = document.getElementById("content").querySelectorAll(".holder"); 
+
+		divsoff();
+		document.getElementById("state0").style.display = "flex";
+		document.getElementById("buttonStart").style.display = "block";
+		document.getElementById("buttonStop").style.display = "none";
+
+
+		socket.on('shootfeedback', function (data) {
+
+			camID = data.cam;
+			snapit = data.snap;
+			completeFilename = data.filename;
+
+
+			if (snapit == 1){	
+
+				document.getElementById("loader").style.display = "inline-block";
+				document.getElementById("buttonStart").style.display = "none";
+				document.getElementById("buttonStop").style.display = "block";
+
+				document.getElementById("previewPhoto").src = "";
+
+				setTimeout(function(){
+					document.getElementById("loader").style.display = "none";
+					document.getElementById("previewPhoto").src = "photos/" + completeFilename;
+				}, 2000);
+				
+			} else if(snapit == 0){ // stop button pressed, start interval
+				
+				document.getElementById("buttonStart").style.display = "block";
+				document.getElementById("buttonStop").style.display = "none";
+
+			
+			} else if(snapit == 3){ // start button pressed, start interval
+				
+				document.getElementById("buttonStart").style.display = "none";
+				document.getElementById("buttonStop").style.display = "block";
+
+			}
+
+			
+		});
+
+
+		socket.on('disconnect', function () {
+        	disconnected();
+    	});
+
+    	socket.on('reconnect', function () {
+        	reconnected();
+    	});
+
+
+
+
+// SUBROUTINES
+
+
+		// DISCONNECTED
+		function majorerror(){
+			divsoff();
+			document.getElementById("localerror").style.display = "flex";
+			document.getElementById("errorcopy").innerHTML = "<h2>MAJOR ERROR</h2>";
+		}
+
+
+		// LOCAL ERROR
+		function disconnected(){
+			divsoff();
+			document.getElementById("localerror").style.display = "flex";
+			document.getElementById("errorcopy").innerHTML = "<h2>DISCONNECTED</h2>";
+		}
+
+		// RECONNECTED
+		function reconnected(){
+			divsoff();
+			document.getElementById("state0").style.display = "flex";
+			document.getElementById("buttonStart").style.display = "block";
+			document.getElementById("buttonStop").style.display = "none";
+		}
+
+
+		
+		// DIV STYLES RESET
+		function divsoff(){
+			var i;
+			for (i = 0; i < uiHolders.length; i++) {
+			  uiHolders[i].style.display = "none";
+			}
+		}
+
+
+		// SEND THROUGH BACKEND TO SERVER WEBSOCKET
+		function shoot(newValue){
+			socket.emit('shootit', { value: newValue });
+			console.log("Shoot front " + newValue);
+		}
+
+		
+
+	</script>
+  </body>
+</html>
